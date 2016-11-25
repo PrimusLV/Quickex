@@ -16,10 +16,26 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-namespace quickex\controller;
+namespace quickex\even\player;
 
-class GameController {
+use pocketmine\event\Event;
+use pocketmine\event\Cancellable;
+use quickex\entity\Player;
+use quickex\Game;
+
+class PlayerJoinGame extends Event implements Cancellable {
 	
+	public function __construct(Player $player, Game $game) {
+		$this->game = $game;
+		$this->player = $player;
+	}
 
+	public function getGame() : Game {
+		return $this->game;
+	}
+
+	public function getPlayer() : Player {
+		$this->player;
+	}
 
 }

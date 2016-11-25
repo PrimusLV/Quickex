@@ -16,10 +16,27 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-namespace quickex\controller;
+namespace quickex;
 
-class GameController {
-	
+abstract class StateBasedGame extends Game {
 
+	/**
+	 * @var State[]
+	 */
+	protected $states = [];
+
+
+	public function addState(State $state) {
+		if($this->hasState($state)) 
+			throw new \InvalidArgumentException("$this already has a state with id {$state->getID()}");
+		$this->states[$state->getID()] = $state;
+		$state->init();
+	}
+
+	public function hasState(State $state) : bool {
+		return isset($this->states[$state->getID()]);
+	}
+
+	public abstract function initStatesList();
 
 }

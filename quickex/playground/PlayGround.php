@@ -16,10 +16,23 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-namespace quickex\controller;
+namespace quickex\playground;
 
-class GameController {
-	
+use pocketmine\level\Location;
 
+abstract class PlayGround {
+
+	/**
+	 * Check if Location is inside a play ground.
+	 *
+	 */
+	public abstract function isInPlayGround(Location $pos) : bool;
+
+	/**
+	 * If your map requires a restoration, then do it in here.
+	 */
+	public function reset() {}
+
+	public abstract function isReady() : bool;
 
 }

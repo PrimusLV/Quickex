@@ -16,10 +16,29 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-namespace quickex\controller;
+namespace quickex\playground;
 
-class GameController {
+class LevelPlayGround extends PlayGround {
+
+	/**
+	 * @var Level
+	 */
+	protected $level;
+
+	public function isInsidePlayGround(Location $pos) : bool {
+
+	}
 	
-
+	/**
+	 * Returns a Level object if exists
+	 */
+	public function getLevel() {
+		$level = $this->level;
+		if($level) return $level;
+		if($this->area) {
+			return $this->area->getLevel();
+		}
+		return $level;
+	}
 
 }

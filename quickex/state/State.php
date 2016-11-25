@@ -16,10 +16,46 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-namespace quickex\controller;
+namespace quickex\state;
 
-class GameController {
-	
+use quickex\Game;
 
+abstract class State {
+
+	/**
+	 * @var Game
+	 */
+	protected $game;
+
+	/**
+	 * Construct new State instance
+	 * @param Game $game owner of this state
+	 */
+	public function __construct(Game $game) {
+		$this->game = $game;
+	}
+
+	/**
+	 * Usually the index of array position in StateBasedGame::$states array
+	 * @return int
+	 */
+	public abstract function getID() : int;
+
+	/**
+	 * Init the state
+	 */
+	public abstract function init();
+
+	/**
+	 * Update the state
+	 */
+	public abstract function tick();
+
+	/**
+	 * @return Game
+	 */
+	public function getGame() : Game {
+		return $this->game;
+	}
 
 }

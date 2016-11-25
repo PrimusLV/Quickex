@@ -18,7 +18,7 @@
  */
 namespace quickex\controller;
 
-class GameController {
+class SignController {
 	
 
 

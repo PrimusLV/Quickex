@@ -16,10 +16,21 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-namespace quickex\controller;
+namespace quickex\playground;
 
-class GameController {
+class AreaPlayGround extends PlayGround {
 	
+	/**
+	 * @return Area|null
+	 */
+	public function getArea() {
+		return $this->area;
+	}
+
+	/**
+	 * @var Area|null
+	 */
+	protected $area;
 
 
 }
