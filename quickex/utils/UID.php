@@ -16,10 +16,34 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
- namespace quickex\block;
+ namespace quickex\utils;
 
- class JoinSign extends GameSign {
+ class UID {
 
- 	public function __construct() {}
+ 	/**
+ 	 * @var UID[] $uids
+ 	 */
+ 	public static $uids = [];
+
+ 	/**
+ 	 * @var string
+ 	 */
+ 	public $id;
+
+ 	public static function generate() : UID {
+ 		do {
+ 			$id = new UID();
+ 		} while(in_array($id, self::$uids, true));
+ 		self::$uids[] = $id;
+ 		return $id;
+ 	}
+
+ 	public function __construct() {
+ 		$this->id = uniqid();
+ 	}
+
+ 	public function __toString() {
+ 		return $this->id;
+ 	}
 
  }
