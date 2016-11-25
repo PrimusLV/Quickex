@@ -18,15 +18,35 @@
  */
 namespace quickex\controller;
 
-class GameController extends Controller {
-		
+final abstract class Controller implements \ArrayAccess {
+	
 	/**
-	 * @var Game[]
+	 * @var mixed
 	 */
-	private $games = [];
+	protected $container = [];
 
-	public function get(string $id) {
-
+	public function offsetExists($offset) {
+		return isset($this->container[$offset]);
 	}
+
+	public function offsetUnset($offset) {
+        unset($this->container[$offset]);
+    }
+
+    public function offsetGet($offset) {
+        return isset($this->container[$offset]) ? $this->container[$offset] : null;
+    }
+
+    public function offsetSet($offset, $value) {
+        if (is_null($offset)) {
+            $this->container[] = $value;
+        } else {
+            $this->container[$offset] = $value;
+        }
+    }
+
+    public function contains($value, $strict = true) : bool {
+    	return in_array($value, $this->container, $strict);
+    }
 
 }

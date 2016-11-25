@@ -27,6 +27,12 @@ use localizer\Localizer;
  */
 abstract class Game {
 
+	public function __construct(PlayerGround $playground, array $participators = [], string $name = null) {
+		if($name) $this->name = $name;
+		$this->playground = $playground;
+		$this->participators = $participators;
+	}
+
 	/*
 	 * ----------------------------------------------------------
 	 * PARTICIPATOR
@@ -74,7 +80,15 @@ abstract class Game {
 		return false;
 	}
 
-	public function 
+	/**
+	 * @param Participant $participant
+	 * @throws \InvalidArgumentException
+	 */
+	public function addParticipator(Participant $participant) {
+		if($this->isParticipant($participant))
+			throw new \InvalidArgumentException("$participant already is a participant of $this");
+		$this->participators[] = $participant;
+	}
 
 	/*
 	 * ----------------------------------------------------------
@@ -173,7 +187,6 @@ abstract class Game {
 	 */
 	public function tick() {
 		$this->duration++;
-		$this->getState()->tick();
 	}
 
 	/*
@@ -193,5 +206,32 @@ abstract class Game {
 	 * @return Participant
 	 */
 	public abstract function getLoser() : Participant;
+
+	/**
+	 * Award the winner
+	 */
+	public abstract function awardWinner(Participant $participant);
+
+	/**
+	 * On Participant Join
+	 * @param Participant
+	 */
+	public abstract function onJoin(Participant $participant);
+
+	/**
+	 * On Participant Leave
+	 * @param Participant
+	 */
+	public abstract function onLeave(Participant $participant);
+
+	/*
+	 * ----------------------------------------------------------
+	 * MAGIC FUNCTIONS
+	 * ----------------------------------------------------------
+	 */
+
+	public function __toString() {
+		return "Game#".$this->uid."(".$this->getDisplayName().")";
+	}
 
 }
