@@ -35,6 +35,22 @@ abstract class State {
 		$this->game = $game;
 	}
 
+	/*
+	 * ----------------------------------------------------------
+	 * ABSTRACT FUNCTIONS
+	 * ----------------------------------------------------------
+	 */
+
+	/**
+	 * When game has this state
+	 */
+	public abstract function start();
+
+	/**
+	 * When game had this state and it changed
+	 */
+	public abstract function end();
+
 	/**
 	 * Usually the index of array position in StateBasedGame::$states array
 	 * @return int

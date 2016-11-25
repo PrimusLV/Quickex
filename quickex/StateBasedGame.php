@@ -59,7 +59,7 @@ abstract class StateBasedGame extends Game {
 
 	public function enterState(State $state, StateTransition $transition = null) {
 		if(!$transition) { // Doesn't require any special transition.
-			$this->state = $state->getID();
+			$this->setState($state->getID());
 		} else {
 			$this->transition = $transition;
 		}
@@ -67,9 +67,15 @@ abstract class StateBasedGame extends Game {
 
 	public function tick() {
 		parent::tick();
-		if($this->transition) {
-			if($this->transition->isCompleted()) {
-				$this->state = $this->transition->getTargetState()->getID();
+		if($this->transition) 
+		{
+			if($this->transition->isCompleted()) 
+			{
+				$this->setState($this->transition->getTargetState());
+			} 
+			else 
+			{
+				$this->transition->tick();
 			}
 		}
 	}
