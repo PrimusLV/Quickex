@@ -25,7 +25,7 @@ use localizer\Localizer;
 /**
  * 
  */
-abstract class Game {
+abstract class Game implements Unique {
 
 	public function __construct(PlayerGround $playground, array $participators = [], string $name = null) {
 		if($name) $this->name = $name;
@@ -98,7 +98,7 @@ abstract class Game {
 
 	/**
 	 * Human readable game name. Usually language key
-	 * Warning: Should not be used as identifier!
+	 * Warning: Should not be used as an identifier!
 	 * @var string
 	 */
 	protected $name = "game.undefined";

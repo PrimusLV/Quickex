@@ -18,6 +18,41 @@
  */
 namespace quickex\entity;
 
-abstract class Participant {
+use quickex\Unique;
+
+abstract class Participant implements Unique {
 	
+	/*
+	 * ----------------------------------------------------------
+	 * IDENTIFIER
+	 * ----------------------------------------------------------
+	 */
+
+	/**
+	 * @var UID
+	 */
+	protected $id;
+
+	public function getUniqueID() : UID {
+		return $this->id;
+	}
+
+	/*
+	 * ----------------------------------------------------------
+	 * ABSTRACT FUNCTIONS
+	 * ----------------------------------------------------------
+	 */
+
+	public abstract function sendMessage(string $message);
+
+	public abstract function sendPopup(string $popup);
+
+	public abstract function sendTip(string $tip);
+
+	/*
+	 * ----------------------------------------------------------
+	 * MAGIC FUNCTIONS
+	 * ----------------------------------------------------------
+	 */
+
 }

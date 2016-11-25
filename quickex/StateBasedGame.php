@@ -26,6 +26,10 @@ abstract class StateBasedGame extends Game {
 	protected $states = [];
 
 
+	/**
+	 * @param State $state
+	 * @throws InvalidArgumentException
+	 */
 	public function addState(State $state) {
 		if($this->hasState($state)) 
 			throw new \InvalidArgumentException("$this already has a state with id {$state->getID()}");
@@ -33,9 +37,48 @@ abstract class StateBasedGame extends Game {
 		$state->init();
 	}
 
+	/**
+	 * @param State $state
+	 * @return bool
+	 */
 	public function hasState(State $state) : bool {
 		return isset($this->states[$state->getID()]);
 	}
+
+	/**
+	 * @return State|null
+	 * @throws \Exception
+	 */
+	public function getState($id) {
+		if(!isset($this->states[$id]))
+		{
+			throw new \Exception("game has no state with id {$id}");
+		}
+		return $this->states[$id];
+	}
+
+	public function enterState(State $state, StateTransition $transition = null) {
+		if(!$transition) { // Doesn't require any special transition.
+			$this->state = $state->getID();
+		} else {
+			$this->transition = $transition;
+		}
+	}
+
+	public function tick() {
+		parent::tick();
+		if($this->transition) {
+			if($this->transition->isCompleted()) {
+				$this->state = $this->transition->getTargetState()->getID();
+			}
+		}
+	}
+
+	/*
+	 * ----------------------------------------------------------
+	 * ABSTRACT FUNCTIONS
+	 * ----------------------------------------------------------
+	 */
 
 	public abstract function initStatesList();
 
