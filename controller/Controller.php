@@ -18,7 +18,22 @@
  */
 namespace quickex\controller;
 
-final abstract class Controller implements \ArrayAccess {
+use quickex\Quickex;
+
+abstract class Controller implements \ArrayAccess {
+
+    /**
+     * @var Quickex
+     */
+    protected $quickex;
+
+    public function __construct(Quickex $quickex) {
+        $this->quickex = $quickex;
+    }
+
+    public function getQuickex() : Quickex {
+        return $this->quickex;
+    }
 	
 	/**
 	 * @var mixed
@@ -47,6 +62,13 @@ final abstract class Controller implements \ArrayAccess {
 
     public function contains($value, $strict = true) : bool {
     	return in_array($value, $this->container, $strict);
+    }
+
+    /**
+     * Handle shutdown if necessary.
+     */
+    public function shutdown() {
+
     }
 
 }

@@ -18,15 +18,4 @@
  */
 namespace quickex\controller;
 
-class GameController extends Controller {
-		
-	/**
-	 * @var Game[]
-	 */
-	private $games = [];
-
-	public function get(string $id) {
-
-	}
-
-}
+class GameController extends Controller {}

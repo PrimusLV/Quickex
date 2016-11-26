@@ -18,4 +18,4 @@
  */
 namespace quickex\controller;
 
-class SignController extends Controller {}
+class TeamController extends Controller {}
