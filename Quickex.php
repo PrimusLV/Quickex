@@ -137,4 +137,13 @@ final class Quickex {
  		return self::$instance->$this->dataPath;
  	}
 
+ 	/**
+ 	 * Returns a resource. NOTE: use fclose() when job with it has done
+ 	 * @param string $path relative to $this->dataPath
+ 	 * @return resource|null
+ 	 */
+ 	public function getResource($path) {
+ 		return fopen(realpath($this->dataPath . $path));
+ 	}
+
  }
