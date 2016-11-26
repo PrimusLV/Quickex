@@ -17,3 +17,18 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
  namespace entity;
+
+ use pocketmine\Player as PMPlayer;
+
+ class Player extends Participant {
+
+ 	/**
+ 	 * @var PMPlayer
+ 	 */
+ 	protected $player;
+
+ 	public function getPlayer() {
+ 		return $this->player;
+ 	}
+
+ }

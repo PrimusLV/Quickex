@@ -27,7 +27,9 @@ use localizer\Localizer;
  */
 abstract class Game implements Unique {
 
-	public function __construct(PlayerGround $playground, array $participators = [], string $name = null) {
+	protected $plugin;
+
+	public function __construct(PluginBase $plugin, Playground $playground, array $participators = [], string $name = null) {
 		if($name) $this->name = $name;
 		$this->playground = $playground;
 		$this->participators = $participators;
@@ -144,11 +146,11 @@ abstract class Game implements Unique {
 	 */
 
 	/**
-	 * @var PlayGround
+	 * @var Playground
 	 */
 	protected $playground;
 
-	public function getPlayGround() : PlayGround {
+	public function getPlayground() : Playground {
 		return $this->playground;
 	}
 

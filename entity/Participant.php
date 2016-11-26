@@ -19,8 +19,14 @@
 namespace quickex\entity;
 
 use quickex\Unique;
+use quickex\utils\UID;
 
 abstract class Participant implements Unique {
+
+	public function __construct(Game $game) {
+		$this->id = UID::generate();
+		$this->game = $game;
+	}
 	
 	/*
 	 * ----------------------------------------------------------
@@ -35,6 +41,15 @@ abstract class Participant implements Unique {
 
 	public function getUniqueID() : UID {
 		return $this->id;
+	}
+
+	/**
+	 * @var Game
+	 */
+	protected $game;
+
+	public function getGame() : Game {
+		return $this->game;
 	}
 
 	/*
