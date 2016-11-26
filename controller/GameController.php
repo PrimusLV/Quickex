@@ -18,4 +18,13 @@
  */
 namespace quickex\controller;
 
-class GameController extends Controller {}
+class GameController extends Controller {
+
+	/**
+	 * Insert logic
+	 */
+	public function tick() {
+		parent::tick();
+	}
+
+}

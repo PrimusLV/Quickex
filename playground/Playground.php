@@ -16,23 +16,42 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-namespace quickex\controller;
+namespace quickex\playground;
 
-use quickex\playground\Playground;
+use pocketmine\level\Position;
+use quickex\Tickable;
 
-class PlaygroundController extends Controller {
+abstract class Playground implements Tickable {
 
 	/**
-	 * Insert logic
+	 * Display name
+	 * @var string
 	 */
-	public function tick() {
-		parent::tick();
+	protected $name;
+
+	public function __construct(string $name) {
+		$this->name = $name;
 	}
 
+	/**
+	 * Check if Position is inside a play ground.
+	 *
+	 */
+	public abstract function isInPlayground(Position $pos) : bool;
 
-	public function addPlayground(Playground $playground) {
-		if($this->contains($playground)) throw new \Exception("Given playground already exists in this controller");
-		$this->container[] = $playground;
+
+	public abstract function isReady() : bool;
+	
+	/**
+	 * If your map requires a restoration, then do it in here.
+	 */
+	public function reset() {}
+
+	/**
+	 * Insert logic here
+	 */
+	public function tick() {
+
 	}
 
 }

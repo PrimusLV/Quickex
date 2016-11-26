@@ -18,4 +18,13 @@
  */
 namespace quickex\controller;
 
-class SignController extends Controller {}
+class PlayerController extends Controller {
+
+	/**
+	 * Insert logic
+	 */
+	public function tick() {
+		parent::tick();
+	}
+
+}

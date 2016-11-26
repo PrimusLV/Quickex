@@ -18,6 +18,19 @@
  */
  namespace quickex;
 
+ use pocketmine\plugin\PluginBase;
+ use pocketmine\Server;
+
+ use quickex\controller\GameController;
+ use quickex\controller\SignController;
+ use quickex\controller\PlayerController;
+ use quickex\controller\TeamController;
+ use quickex\controller\PlaygroundController;
+ use quickex\listener\PlayerEventListener;
+ use quickex\listener\BlockEventListener;
+ use quickex\task\HeartTask;
+
+
 final class Quickex {
 
  	/**
@@ -68,6 +81,9 @@ final class Quickex {
  		// Register listeners
  		$this->server->getPluginManager()->registerEvents(new PlayerEventListener($this), $plugin);
  		$this->server->getPluginManager()->registerEvents(new BlockEventListener($this), $plugin);
+
+ 		// Make my heart go on...
+ 		$this->server->getScheduler()->scheduleRepeatingTask(new HeartTask($this), 1);
  	}
 
  	/*
@@ -98,9 +114,28 @@ final class Quickex {
 
  	/*
  	 * ----------------------------------------------------------
+ 	 * LOGIC
+ 	 * ----------------------------------------------------------
+ 	 */
+
+ 	public function beat($currentTick) {
+ 		if(($currentTick % 20) === 0) { // Controllers need to be updated only every second
+ 			foreach($this->controllers as $controller) {
+ 				$controller->tick();
+ 			}
+ 		}
+ 	}
+
+ 	/*
+ 	 * ----------------------------------------------------------
  	 * SOME API FUNCTIONS
  	 * ----------------------------------------------------------
  	 */
+
+ 	public static function init(PluginBase $plugin) {
+ 		if(self::$instance) throw new \InvalidStateException("Quickex already initiated");
+ 		self::$instance = new self($plugin);
+ 	}
 
  	/**
  	 * Handles the shutdown
@@ -144,6 +179,10 @@ final class Quickex {
  	 */
  	public function getResource($path) {
  		return fopen(realpath($this->dataPath . $path));
+ 	}
+
+ 	public static function getServer() : Server {
+ 		return self::$instance->server;
  	}
 
  }

@@ -17,3 +17,28 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
  namespace quickex\listener;
+
+use pocketmine\event\Listener;
+
+use quickex\Quickex;
+
+
+ class BlockEventListener implements Listener {
+
+ 	/**
+ 	 * @var Quickex
+ 	 */
+ 	private $quickex;
+
+ 	public function __construct(Quickex $quickex) {
+ 		$this->quickex = $quickex;
+ 	}
+
+ 	/**
+ 	 * @return Quickex
+ 	 */
+ 	public function getQuickex() : Quickex {
+ 		return $this->quickex;
+ 	}
+
+ }

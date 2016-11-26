@@ -18,21 +18,43 @@
  */
 namespace quickex\playground;
 
-use pocketmine\level\Location;
+use quickex\Quickex;
 
-abstract class PlayGround {
+use pocketmine\level\Level;
+use pocketmine\level\Position;
+
+class LevelPlayground extends Playground {
+
+	public function __construct(Level $level) {
+		$this->level = $level;
+
+		Quickex::getPlaygroundController()->addPlayground($this);
+	}
 
 	/**
-	 * Check if Location is inside a play ground.
-	 *
+	 * @var Level
 	 */
-	public abstract function isInPlayGround(Location $pos) : bool;
+	protected $level;
 
+	public function isInPlayground(Position $pos) : bool {
+		if($pos->level === $this->level) return true;
+		return false;
+	}
+
+	public function isReady() : bool {
+		return true;
+	}
+	
 	/**
-	 * If your map requires a restoration, then do it in here.
+	 * Returns a Level object if exists
 	 */
-	public function reset() {}
-
-	public abstract function isReady() : bool;
+	public function getLevel() {
+		$level = $this->level;
+		if($level) return $level;
+		if($this->area) {
+			return $this->area->getLevel();
+		}
+		return $level;
+	}
 
 }

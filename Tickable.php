@@ -16,29 +16,13 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-namespace quickex\playground;
+ namespace quickex;
 
-class LevelPlayGround extends PlayGround {
+ interface Tickable {
 
-	/**
-	 * @var Level
-	 */
-	protected $level;
+ 	/**
+ 	 * Insert logic here
+ 	 */
+ 	public function tick();
 
-	public function isInsidePlayGround(Location $pos) : bool {
-
-	}
-	
-	/**
-	 * Returns a Level object if exists
-	 */
-	public function getLevel() {
-		$level = $this->level;
-		if($level) return $level;
-		if($this->area) {
-			return $this->area->getLevel();
-		}
-		return $level;
-	}
-
-}
+ }

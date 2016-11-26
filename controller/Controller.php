@@ -64,11 +64,30 @@ abstract class Controller implements \ArrayAccess {
     	return in_array($value, $this->container, $strict);
     }
 
+    /*
+     * ----------------------------------------------------------
+     * LOGIC
+     * ----------------------------------------------------------
+     */
+
     /**
      * Handle shutdown if necessary.
      */
     public function shutdown() {
 
     }
+
+    public function tick() {
+        foreach($this->container as $item) {
+            $item->tick();
+        }
+    }
+
+    /*
+     * ----------------------------------------------------------
+     * ABSTRACT FUNCTIONS
+     * ----------------------------------------------------------
+     */
+
 
 }

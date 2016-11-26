@@ -16,23 +16,21 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-namespace quickex\controller;
+namespace quickex\playground;
 
-use quickex\playground\Playground;
-
-class PlaygroundController extends Controller {
+class AreaPlayground extends LevelPlayground {
+	
+	/**
+	 * @return Area|null
+	 */
+	public function getArea() {
+		return $this->area;
+	}
 
 	/**
-	 * Insert logic
+	 * @var Area|null
 	 */
-	public function tick() {
-		parent::tick();
-	}
+	protected $area;
 
-
-	public function addPlayground(Playground $playground) {
-		if($this->contains($playground)) throw new \Exception("Given playground already exists in this controller");
-		$this->container[] = $playground;
-	}
 
 }

@@ -20,8 +20,10 @@ namespace quickex\entity;
 
 use quickex\Unique;
 use quickex\utils\UID;
+use quickex\Tickable;
+use quickex\Named;
 
-abstract class Participant implements Unique {
+abstract class Participant implements Unique, Tickable, Named {
 
 	public function __construct(Game $game) {
 		$this->id = UID::generate();
@@ -69,5 +71,16 @@ abstract class Participant implements Unique {
 	 * MAGIC FUNCTIONS
 	 * ----------------------------------------------------------
 	 */
+
+	/*
+	 * ----------------------------------------------------------
+	 * LOGIC
+	 * ----------------------------------------------------------
+	 */
+
+	/**
+	 * Insert logic here
+	 */
+	public function tick() {}
 
 }

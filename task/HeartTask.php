@@ -16,21 +16,25 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-namespace quickex\playground;
+namespace quickex\task;
 
-class AreaPlayGround extends PlayGround {
-	
+use pocketmine\scheduler\Task;
+
+use quickex\Quickex;
+
+final class HeartTask extends Task {
+
 	/**
-	 * @return Area|null
+	 * @var Quickex
 	 */
-	public function getArea() {
-		return $this->area;
+	private $quickex;
+
+	public function __construct(Quickex $quickex) {
+		$this->quickex = $quickex;
 	}
 
-	/**
-	 * @var Area|null
-	 */
-	protected $area;
-
+	public function onRun($currentTick) {
+		$this->quickex->beat($currentTick);
+	}
 
 }

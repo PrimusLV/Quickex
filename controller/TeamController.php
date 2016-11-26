@@ -18,4 +18,13 @@
  */
 namespace quickex\controller;
 
-class TeamController extends Controller {}
+class TeamController extends Controller {
+
+	/**
+	 * Insert logic
+	 */
+	public function tick() {
+		parent::tick();
+	}
+
+}

@@ -21,15 +21,16 @@ namespace quickex;
 use quickex\entity\Player;
 use quickex\entity\Team;
 use localizer\Localizer;
+use quickex\utils\UID;
+use quickex\entity\Participant;
+use quickex\playground\Playground;
 
 /**
  * 
  */
-abstract class Game implements Unique {
+abstract class Game implements Unique, Tickable {
 
-	protected $plugin;
-
-	public function __construct(PluginBase $plugin, Playground $playground, array $participators = [], string $name = null) {
+	public function __construct(Playground $playground, array $participators = [], string $name = null) {
 		if($name) $this->name = $name;
 		$this->playground = $playground;
 		$this->participators = $participators;
@@ -44,7 +45,7 @@ abstract class Game implements Unique {
 	/**
 	 * @var Participant[]
 	 */
-	protected function $participators = [];
+	protected $participators = [];
 
 	/**
 	 * @return Participant[]
@@ -117,7 +118,11 @@ abstract class Game implements Unique {
 	 * @return string
 	 */
 	public function getDisplayName(string $language = null) : string {
-		return Localizer::translate($this->getName(), $language);
+		return Localizer::translate($this->getName(), [], $language);
+	}
+
+	public function setName(string $name) {
+		$this->name = $name;
 	}
 
 	/*

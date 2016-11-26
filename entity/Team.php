@@ -16,7 +16,7 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
- namespace entity;
+ namespace quickex\entity;
 
  use localizer\Localizer;
 
@@ -25,7 +25,24 @@
  class Team extends Participant {
 
  	public function __construct(string $name, int $maxPlayers, string $color = TextFormat::WHITE) {
+ 		$this->name = $name;
+ 		$this->maxPlayers = $maxPlayers;
+ 		$this->color = $color;
+ 	}
 
+ 	/*
+ 	 * ----------------------------------------------------------
+ 	 * COLOR
+ 	 * ----------------------------------------------------------
+ 	 * 
+ 	 * Used for armour, nametags, chat etc.
+ 	 *
+ 	 */
+
+ 	protected $color = TextFormat::WHITE;
+
+ 	public function getColor() : string {
+ 		return $this->color;
  	}
 
  	/*
@@ -99,5 +116,23 @@
  			$this->getGame()->leave($player);
  		}
  	}
+
+ 	public function sendMessage(string $message) {
+ 		foreach($this->players as $player) {
+ 			$player->sendMessage($message);
+ 		}
+ 	}
+
+	public function sendPopup(string $popup) {
+		foreach($this->players as $player) {
+ 			$player->sendPopup($popup);
+ 		}
+	}
+
+	public function sendTip(string $tip) {
+		foreach($this->players as $player) {
+ 			$player->sendTip($tip);
+ 		}
+	}
 
  }
