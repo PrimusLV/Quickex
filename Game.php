@@ -30,6 +30,18 @@ use quickex\playground\Playground;
  */
 abstract class Game implements Unique, Tickable {
 
+	// Game stopped with unknown reason
+	const END_UNKNWON = 0;
+	// Game Over
+	const END_TIME 		= 1;
+	const END_NORMAL 	= 1
+	// Not enough players
+	const END_NO_PLAYER = 2;
+	// Something happened to Playground
+	const END_NO_PLAYGROUND = 3;
+	// Same as END_NO_PLAYER
+	const END_NO_TEAMS = 4;
+
 	public function __construct(Playground $playground, array $participators = [], string $name = null) {
 		if($name) $this->name = $name;
 		$this->playground = $playground;
@@ -220,16 +232,46 @@ abstract class Game implements Unique, Tickable {
 	public abstract function awardWinner(Participant $participant);
 
 	/**
-	 * On Participant Join
+	 * On Participant Join (after)
 	 * @param Participant
 	 */
 	public abstract function onJoin(Participant $participant);
 
 	/**
-	 * On Participant Leave
+	 * On Participant Leave (before)
 	 * @param Participant
 	 */
 	public abstract function onLeave(Participant $participant);
+
+	/**
+	 * On Player spawn. (after)
+	 * @param Player $player
+	 */
+	public abstract function onSpawn(Player $player);
+
+	/**
+	 * You can delay spawns in this function, to actually spawn the player
+	 * call Playground::spawnPlayer()
+	 * @param Player $player
+	 * @return bool if player got spawned = true, else = false
+	 */
+	public function handleSpawn(Player $player) : bool {
+		if(!$player->getPlayer()->isAlive()) { // The player must be dead to spawn
+			return $this->playground->spawnPlayer($player);
+		}
+		return false;
+	}	
+
+	/**
+	 * Handle game start
+	 */
+	public function start() {}
+
+	/**
+	 * Handle game ending
+	 * @param $reason why the game stopped
+	 */
+	public function end($reason = Game::END_UNKNOWN) {}
 
 	/*
 	 * ----------------------------------------------------------

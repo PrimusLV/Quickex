@@ -29,8 +29,13 @@ abstract class Playground implements Tickable {
 	 */
 	protected $name;
 
-	public function __construct(string $name) {
+	/**
+	 * @param string $name
+	 * @param Spawn[]|array $spawns
+	 */
+	public function __construct(string $name, array $spawns) {
 		$this->name = $name;
+		$this->spawns = $spawns;
 	}
 
 	/**
@@ -41,6 +46,29 @@ abstract class Playground implements Tickable {
 
 
 	public abstract function isReady() : bool;
+
+	/*
+	 * ----------------------------------------------------------
+	 * SPAWN
+	 * ----------------------------------------------------------
+	 * 
+	 * Handle the spawning here
+	 *
+	 */
+
+	protected $spawns
+
+	/**
+	 * Put the player on playground
+	 * @param Player $player
+	 * @return bool true if player got spawned. False if not
+	 */
+	public abstract function spawnPlayer(Player $player) {
+		if(!empty($this->spawns)) {
+			$randomSpawn = $this->spawns[mt_rand(0, count($this->spawns) - 1)];
+			$randomSpawn->teleport($player->getPlayer());
+		}
+	}
 	
 	/**
 	 * If your map requires a restoration, then do it in here.

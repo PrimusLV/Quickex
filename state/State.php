@@ -19,8 +19,15 @@
 namespace quickex\state;
 
 use quickex\Game;
+use quickex\hud\HUD;
 
-abstract class State {
+abstract class State implements Tickable {
+
+	/**
+	 * You can add your hud here
+	 * @var HUD
+	 */
+	protected $hud;
 
 	/**
 	 * @var Game
@@ -61,11 +68,6 @@ abstract class State {
 	 * Init the state
 	 */
 	public abstract function init();
-
-	/**
-	 * Update the state
-	 */
-	public abstract function tick();
 
 	/**
 	 * @return Game

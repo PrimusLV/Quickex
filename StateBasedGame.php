@@ -21,9 +21,16 @@ namespace quickex;
 abstract class StateBasedGame extends Game {
 
 	/**
+	 * All possible states for this game
 	 * @var State[]
 	 */
 	protected $states = [];
+
+	/**
+	 * Current State
+	 * @var State
+	 */
+	protected $state;
 
 
 	/**
@@ -63,6 +70,13 @@ abstract class StateBasedGame extends Game {
 		} else {
 			$this->transition = $transition;
 		}
+	}
+
+	public function setState(State $state) {
+		if(!$this->hasState($state)) throw new \InvalidArgumentException("$this doesn't have state by id {$state->getID()}");
+		$this->state->end();
+		$this->state = $state;
+		$this->state->start();
 	}
 
 	public function tick() {
